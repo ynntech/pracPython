@@ -1,0 +1,2 @@
+# pracPython
+Pythonの練習。
