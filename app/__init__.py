@@ -9,6 +9,12 @@ def create_app(classifier):
     # Flaskアプリを作成
     app = Flask(__name__)
 
+    @app.route('/')
+    def main_page():
+        print("POST GET！！！")
+        print("mainがよばれてるよ！！！")
+        return render_template("index.html", result="なにもなし")
+
     @app.route('/', methods=["GET", "POST"])
     def predict():
         flag = '0'
@@ -32,7 +38,6 @@ def create_app(classifier):
             print("flagがかわった" + flag)
 
         if flag == '0':
-            print("GETうけとり！！！")
             print("さいごflagは" + flag)
             return render_template("index.html", result="なにもなし2")
         else:
@@ -46,12 +51,6 @@ def create_app(classifier):
             # })
 
             # return "result"+result
-
-    # @app.route("/", methods=["GET"])
-    # def main_page():
-    #    print("GETうけとり！！！")
-    #    print("mainがよばれてるよ！！！")
-    #    return render_template("index.html", result="なにもなし")
 
     if __name__ == "__main__":
         # webサーバー立ち上げ
