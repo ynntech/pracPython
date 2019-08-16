@@ -31,6 +31,8 @@ def create_app(classifier):
         # return jsonify({
         #    "result": result
         # })
+
+        # -----問題の箇所-----
         return render_template("result.html", result=result)
 
         # return "result"+result
