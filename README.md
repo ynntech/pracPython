@@ -21,3 +21,7 @@ docker run
 docker run -it --rm -p 8080:8080 tako-burrito-api:latest
 ```
 
+dockerのときのPOSTは
+```
+http --form post :8080 img@パス/360.jpg 
+```
