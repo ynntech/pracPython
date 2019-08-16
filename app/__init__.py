@@ -12,7 +12,7 @@ def create_app(classifier):
     def main_page():
         return render_template("index.html")
 
-    @app.route('/', methods=['POST'])
+    @app.route('/', methods=["GET", "POST"])
     def predict():
         # 受け取ったハンドラを取得
         img_file = request.files['img']
