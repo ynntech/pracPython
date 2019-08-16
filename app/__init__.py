@@ -37,6 +37,7 @@ def create_app(classifier):
             return render_template("index.html", result="なにもなし2")
         else:
             print("さいごflagは" + flag)
+            print("resultは"+result)
             return render_template("index.html", result=result)
 
             # 結果をJSONに。
@@ -44,9 +45,8 @@ def create_app(classifier):
             #    "result": result
             # })
 
-            # -----問題の箇所-----
-
             # return "result"+result
+
     # @app.route("/", methods=["GET"])
     # def main_page():
     #    print("GETうけとり！！！")
