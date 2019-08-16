@@ -33,7 +33,7 @@ def create_app(classifier):
         # })
 
         # -----問題の箇所-----
-        return render_template("result.html", result=result)
+        return render_template("index.html", result=result)
 
         # return "result"+result
     if __name__ == "__main__":
