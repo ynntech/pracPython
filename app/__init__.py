@@ -32,6 +32,7 @@ def create_app(classifier):
             print("flagがかわった" + flag)
 
         if flag == '0':
+            print("GETうけとり！！！")
             print("さいごflagは" + flag)
             return render_template("index.html", result="なにもなし2")
         else:
