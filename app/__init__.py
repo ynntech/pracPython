@@ -8,24 +8,34 @@ import sys
 def create_app(classifier):
     # Flaskアプリを作成
     app = Flask(__name__)
-    @app.route("/")
-    def main_page():
-        return render_template("index.html")
+    flag = 0
+   # @app.route("/")
+   # def main_page():
+   #     return render_template("index.html", result="なにもなし")
 
-    @app.route('/', methods=["POST"])
+    @app.route('/', methods=["GET", "POST"])
     def predict():
-        # 受け取ったハンドラを取得
-        img_file = request.files['img']
+        if request.method == 'POST':
+            # 受け取ったハンドラを取得
+            img_file = request.files['img']
 
-        # ファイルを空かどうかチェック
-        if img_file.filename == "":
-            return "BadRequest", 400
+            # ファイルを空かどうかチェック
+            if img_file.filename == "":
+                return "BadRequest", 400
 
-        # PILを使用して画像ファイルを読み込む
-        img = Image.open(img_file)
+            # PILを使用して画像ファイルを読み込む
+            img = Image.open(img_file)
 
-        # 識別モデルを利用してここでタコスかぶりとーかを予測
-        result = classifier.predict(img)
+            # 識別モデルを利用してここでタコスかぶりとーかを予測
+            result = classifier.predict(img)
+            flag = result
+        else:
+            flag = 0
+
+        if flag == 0:
+            return render_template("index.html", result="なにもなし2")
+        else:
+            return render_template("index.html", result=flag)
 
         # 結果をJSONに。
         # return jsonify({
@@ -33,10 +43,6 @@ def create_app(classifier):
         # })
 
         # -----問題の箇所-----
-        if request.method == 'POST':
-            return render_template("index.html", result=result)
-        else:
-            return render_template("index.html", result="なにもなし")
 
         # return "result"+result
     if __name__ == "__main__":
