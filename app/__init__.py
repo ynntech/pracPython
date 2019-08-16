@@ -12,7 +12,7 @@ def create_app(classifier):
     def main_page():
         return render_template("index.html")
 
-    @app.route('/', methods=["GET", "POST"])
+    @app.route('/', methods=["POST"])
     def predict():
         # 受け取ったハンドラを取得
         img_file = request.files['img']
@@ -33,11 +33,14 @@ def create_app(classifier):
         # })
 
         # -----問題の箇所-----
-        return render_template("index.html", result=result)
+        if request.method == 'POST':
+            return render_template("index.html", result=result)
+        else:
+            return render_template("index.html", result="なにもなし")
 
         # return "result"+result
     if __name__ == "__main__":
         # webサーバー立ち上げ
-        app.run()
+        app.run(debug=True)
 
     return app
