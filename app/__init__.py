@@ -8,14 +8,13 @@ import sys
 def create_app(classifier):
     # Flaskアプリを作成
     app = Flask(__name__)
-    flag = 0
-   # @app.route("/")
-   # def main_page():
-   #     return render_template("index.html", result="なにもなし")
 
     @app.route('/', methods=["GET", "POST"])
     def predict():
+        flag = '0'
+        print("flagは" + flag)
         if request.method == 'POST':
+            print("POST受け取り")
             # 受け取ったハンドラを取得
             img_file = request.files['img']
 
@@ -28,25 +27,34 @@ def create_app(classifier):
 
             # 識別モデルを利用してここでタコスかぶりとーかを予測
             result = classifier.predict(img)
-            flag = result
-        else:
-            flag = 0
+            print("flagは" + flag)
+            flag = '1'
+            print("flagがかわった" + flag)
 
-        if flag == 0:
+        if flag == '0':
+            print("さいごflagは" + flag)
             return render_template("index.html", result="なにもなし2")
         else:
-            return render_template("index.html", result=flag)
+            print("さいごflagは" + flag)
+            return render_template("index.html", result=result)
 
-        # 結果をJSONに。
-        # return jsonify({
-        #    "result": result
-        # })
+            # 結果をJSONに。
+            # return jsonify({
+            #    "result": result
+            # })
 
-        # -----問題の箇所-----
+            # -----問題の箇所-----
 
-        # return "result"+result
+            # return "result"+result
+    # @app.route("/", methods=["GET"])
+    # def main_page():
+    #    print("GETうけとり！！！")
+    #    print("mainがよばれてるよ！！！")
+    #    return render_template("index.html", result="なにもなし")
+
     if __name__ == "__main__":
         # webサーバー立ち上げ
+        print("よばれたよ")
         app.run(debug=True)
 
     return app
