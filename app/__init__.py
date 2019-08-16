@@ -1,14 +1,18 @@
 # __init__.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from PIL import Image
+import os
+import sys
 
 
 def create_app(classifier):
     # Flaskアプリを作成
     app = Flask(__name__)
+    @app.route("/")
+    def main_page():
+        return render_template("index.html")
 
-    # POST /　に対応する関数を定義
-    @app.route('/', methods=['POST'])
+    @app.route('/', methods=['GET', 'POST'])
     def predict():
         # 受け取ったハンドラを取得
         img_file = request.files['img']
@@ -24,8 +28,14 @@ def create_app(classifier):
         result = classifier.predict(img)
 
         # 結果をJSONに。
-        return jsonify({
-            "result": result
-        })
+        # return jsonify({
+        #    "result": result
+        # })
+        return render_template("result.html", result=result)
+
+        # return "result"+result
+    if __name__ == "__main__":
+        # webサーバー立ち上げ
+        app.run()
 
     return app
